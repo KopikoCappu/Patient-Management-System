@@ -9,6 +9,16 @@ import {
 } from "@/components/ui/form"
 import CustomFormField from "../ui/CustomFormField"
  
+export enum FormFieldType {
+  INPUT = "input",
+  TEXTAREA = "textarea",
+  PHONE_INPUT = "phoneinput",
+  CHECKBOX = "checkbox",
+  DATE_PICKER = "datePicker",
+  SELECT = "select",
+  SKELETON = "skeleton"
+}
+
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
@@ -35,7 +45,31 @@ const PatientForm = () => {
         </section>
 
         <CustomFormField
-            control = {form.control}
+          fieldType = {FormFieldType.INPUT}
+          control = {form.control}
+          name = "name"
+          label = "Full name"
+          placeholder = "John Doe"
+          iconSrc = "/assets/icons/user.svg"
+          iconAlt = "user"
+        />
+        <CustomFormField
+          fieldType = {FormFieldType.INPUT}
+          control = {form.control}
+          name = "email"
+          label = "Email"
+          placeholder = "JohnDoe@jsmastery.pro"
+          iconSrc = "/assets/icons/email.svg"
+          iconAlt = "email"
+        />
+        <CustomFormField
+          fieldType = {FormFieldType.PHONE_INPUT}
+          control = {form.control}
+          name = "phone"
+          label = "Phone Number"
+          placeholder = "(555) 123-4567"
+          iconSrc = "/assets/icons/email.svg"
+          iconAlt = "email"
         />
 
       <Button type="submit">Submit</Button>
