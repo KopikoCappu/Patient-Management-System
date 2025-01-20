@@ -4,11 +4,19 @@ import { redirect } from "next/navigation";
 import RegisterForm from "@/components/forms/RegisterForm";
 import { getPatient, getUser } from "@/lib/actions/patient.actions";
 
-const Register = async ({ params: { userId } }: SearchParamProps) => {
-  const user = await getUser(userId);
-  const patient = await getPatient(userId);
+interface Params {
+  params: { userId: string };
+}
 
-  if (patient) redirect(`/patients/${userId}/register/new-appointment`);
+const Register = async ({ params }: Params) => {
+  const { userId } = await params;
+
+  const user = await getUser(userId); // Fetch user details
+  const patient = await getPatient(userId); // Fetch patient details
+
+  if (patient) {
+    redirect(`/patients/${userId}/register/new-appointment`);
+  }
 
   return (
     <div className="flex h-screen max-h-screen">
@@ -18,12 +26,10 @@ const Register = async ({ params: { userId } }: SearchParamProps) => {
             src="/assets/icons/logo-full.svg"
             height={1000}
             width={1000}
-            alt="patient"
+            alt="logo"
             className="mb-12 h-10 w-fit"
           />
-
           <RegisterForm user={user} />
-
           <p className="copyright py-12">© 2024 CarePulse</p>
         </div>
       </section>
@@ -32,7 +38,7 @@ const Register = async ({ params: { userId } }: SearchParamProps) => {
         src="/assets/images/register-img.png"
         height={1000}
         width={1000}
-        alt="patient"
+        alt="side-image"
         className="side-img max-w-[390px]"
       />
     </div>
