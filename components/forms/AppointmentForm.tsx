@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import {
-  Form
+  Form,
+  FormField
 } from "@/components/ui/form"
 import CustomFormField from "../ui/CustomFormField"
 import SubmitButton from "./SubmitButton";
@@ -25,7 +26,7 @@ const AppointmentForm = ({
 }: {
   userId: string;
   patientId:string;
-  type: "create" | "cancel";
+  type: "create" | "cancel" | "schedule";
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -50,8 +51,26 @@ const AppointmentForm = ({
     } catch (error) {
       console.log(error);
     }
-
+    setIsLoading(false);
   }
+
+
+  let buttonLabel;
+
+  switch (type) {
+    case 'cancel':
+      buttonLabel = "Cancel Appointment";
+      break;
+    case 'create':
+      buttonLabel = "Create Appointment"
+      break
+
+    case 'schedule':
+      buttonLabel = 'Schedule appointment'
+    default:
+      break;
+  }
+
 
 
   return (
@@ -68,8 +87,8 @@ const AppointmentForm = ({
             fieldType = {FormFieldType.SELECT}
             control = {form.control}
             name = "primaryPhysician"
-            label = "Primary Physician"
-            placeholder = "Select a physician"
+            label = "Doctor"
+            placeholder = "Select a doctor"
           >
             {Doctors.map((doctor) => (
               <SelectItem key = {doctor.name} value = {doctor.name}>
@@ -86,12 +105,55 @@ const AppointmentForm = ({
               </SelectItem>
             ))}
           </CustomFormField> 
+
+          <CustomFormField
+          fieldType={FormFieldType.DATE_PICKER}
+          control = {form.control}
+          name = "schedule"
+          label = "Expected appointment date"
+          showTimeSelect
+          dateFormat="MM/dd/yyyy - h:mm aa">
+
+
+
+          </CustomFormField>
+
+          <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+                fieldType = {FormFieldType.TEXTAREA}
+                control = {form.control}
+                name = "reason"
+                label = "Reason for appointment"
+                placeholder = "Enter reason for appointment"
+              />
+
+              <CustomFormField
+                fieldType = {FormFieldType.TEXTAREA}
+                control = {form.control}
+                name = "notes"
+                label = "Notes"
+                placeholder = "Enter notes"
+              />
+          </div>
           </>
         )}
 
 
 
-      <SubmitButton isLoading = {isLoading}>Get Started</SubmitButton>
+        {type === "cancel" && (
+          <CustomFormField
+            fieldType={FormFieldType.TEXTAREA}
+            control = {form.control}
+            name = "cancellationReason"
+            label = "Reason for cancellation"
+            placeholder="Enter reason for cancellation"
+          />
+        )}
+
+
+
+      <SubmitButton isLoading = {isLoading} className = {`${type === 'cancel' ? 'shad-danger-btn' : 
+        'shad-primary-btn'} w-full`}>{buttonLabel}</SubmitButton>
     </form>
   </Form>
   )
