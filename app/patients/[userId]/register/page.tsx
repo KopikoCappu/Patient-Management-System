@@ -15,7 +15,7 @@ const Register = async ({ params }: Params) => {
   const patient = await getPatient(userId); // Fetch patient details
 
   if (patient) {
-    redirect(`/patients/${userId}/register/new-appointment`);
+    redirect(`/patients/${userId}/register/new-appointment/`);
   }
 
   return (

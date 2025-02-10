@@ -1,14 +1,23 @@
-import AppointmentForm from "@/components/forms/AppointmentForm";
+import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
 import Image from "next/image";
 
 interface Params {
-  params: { userId: string };
+  params: { userId: string }; // Params interface to expect userId as a string
 }
 
 export default async function NewAppointment({ params }: Params) {
-  const { userId } = await params; // Await params since it's asynchronous
-  const patient = await getPatient(userId); // Fetch patient details
+  // Ensure params are awaited
+  const { userId } = await params; // This is where we await params
+
+  // Fetch patient data based on userId (this is where you use await)
+  const patient = await getPatient(userId);
+
+  // Handle case where patient or $id is missing
+  if (!patient || !patient.$id) {
+    console.error("Patient not found or missing $id");
+    return <div>Error: Patient data is unavailable.</div>;
+  }
 
   return (
     <div className="flex h-screen max-h-screen">
@@ -26,11 +35,11 @@ export default async function NewAppointment({ params }: Params) {
 
           <AppointmentForm
             type="create"
-            userId={userId}
-            patientId={patient.$id} // Assuming patient object has $id property
+            userId={userId} // Now userId is safely accessed
+            patientId={patient.$id} // Safe to access now
           />
 
-          <p className="justify-items-end text-dark-600 xl:text-left">© 2024 CarePulse</p>
+          <p className="copyright mt-10 py-12">© 2024 CarePulse</p>
         </div>
       </section>
 
