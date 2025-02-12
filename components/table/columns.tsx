@@ -12,12 +12,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import StatusBadge from "../StatusBadge"
+import { formatDateTime } from "@/lib/utils"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Payment = {
+  patient: {
+    name: string
+  }
   id: string
   amount: number
-  status: "pending" | "processing" | "success" | "failed"
+  status: "pending" | "scheduled" | "cancelled"
   email: string
 }
 
@@ -29,16 +34,30 @@ export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "patient",
         header: "Patient",
-        cell: ({row}) => <p className="text-14-medium">{row.original.patient.name}</p>
-
+        cell: ({row}) => {
+          const appointment = row.original
+        return <p className="text-14-medium">{appointment.patient?.name ?? "N/A"}</p>
+        }
    },
   {
     accessorKey: "status",
     header: "Status",
+    cell: ({row}) => (
+      
+      <div className="min-w-[115px]">
+        <StatusBadge status = {row.original.status}/>
+        
+      </div>
+    )
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "schedule",
+    header: "Appointment",
+    cell: ({ row }) => (
+      <p className="text-14-regular min-w-[100px]">
+        {formatDateTime(row.original.schedule, "America/New_York").dateTime}
+      </p>
+    ),
   },
   {
     accessorKey: "amount",
