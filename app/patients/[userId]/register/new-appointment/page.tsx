@@ -1,6 +1,8 @@
 import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
 import Image from "next/image";
+import * as Sentry from "@sentry/nextjs"
+
 
 interface Params {
   params: { userId: string }; // Params interface to expect userId as a string
@@ -10,8 +12,10 @@ export default async function NewAppointment({ params }: Params) {
   // Ensure params are awaited
   const { userId } = await params; // This is where we await params
 
-  // Fetch patient data based on userId (this is where you use await)
   const patient = await getPatient(userId);
+
+  Sentry.metrics.set("user_view_new_appointment", patient.name)
+  
 
   // Handle case where patient or $id is missing
   if (!patient || !patient.$id) {
