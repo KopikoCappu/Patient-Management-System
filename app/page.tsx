@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+
 
 export default function Home({ searchParams }: Props) {
   const isAdmin = searchParams?.admin === 'true';
