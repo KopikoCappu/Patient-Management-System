@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  params: Promise<{ slug: string }>;
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: { slug: string }; // params should be an object
+  searchParams: { [key: string]: string | string[] | undefined }; // searchParams should be an object, NOT a Promise
 };
 
 
