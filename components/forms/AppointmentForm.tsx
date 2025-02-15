@@ -44,7 +44,7 @@ export const AppointmentForm = ({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
       primaryPhysician: appointment ? appointment.primaryPhysician: "",
-      schedule: appointment ? new Date(appointment.schedule) : new Date(),
+      schedule: appointment ? new Date(appointment.schedule) : new Date(Date.now()),
       reason: appointment ? appointment.reason: "",
       note: appointment ? appointment?.note : "",
       cancellationReason: appointment?.cancellationReason || "",
@@ -60,7 +60,7 @@ export const AppointmentForm = ({
           status = "scheduled";
           break;
         case "cancel":
-          status = "cancelled";
+          status = "canceled";
           break;
         default:
           status = "pending";
@@ -192,6 +192,7 @@ export const AppointmentForm = ({
           isLoading={isLoading}
           className={`${type === "cancel" ? "shad-danger-btn" : "shad-primary-btn"} w-full`}
         >
+          
           {buttonLabel}
         </SubmitButton>
       </form>
