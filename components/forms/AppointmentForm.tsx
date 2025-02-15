@@ -72,7 +72,7 @@ export const AppointmentForm = ({
           patient: patientId,
           primaryPhysician: values.primaryPhysician,
           schedule: new Date(values.schedule),
-          reason: values.reason!,  
+          reason: values.reason || "",
           status:status as Status,
           note: values.note,
         });

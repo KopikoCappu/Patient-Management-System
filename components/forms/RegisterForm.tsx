@@ -3,21 +3,18 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormField,
 } from "@/components/ui/form"
 import CustomFormField from "../ui/CustomFormField"
 import SubmitButton from "./SubmitButton";
 import { useState } from "react";
-import { PatientFormValidation, UserFormValidation } from "@/lib/validation";
+import { PatientFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
-import { createUser, registerPatient } from "@/lib/actions/patient.actions";
+import { registerPatient } from "@/lib/actions/patient.actions";
 import { FormFieldType } from "./PatientForm";
 import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/constants";
-import { Radio } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import Image from "next/image";
 import { SelectItem } from "../ui/select";
@@ -62,7 +59,7 @@ const RegisterForm = ({user}: {user: User}) => {
         identificationDocument: formData,
       }
 
-     // @ts-ignore
+    // @ts-expect-error
       const patient = await registerPatient(patientData);
 
       if(patient) router.push(`/patients/${user.$id}/register/new-appointment`)
