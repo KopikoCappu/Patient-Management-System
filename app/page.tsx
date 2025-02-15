@@ -3,14 +3,12 @@ import PasskeyModal from "@/components/PasskeyModal";
 import Image from "next/image";
 import Link from "next/link";
 
-interface SearchParamProps {
-  searchParams: {
-    admin?: string;
-  };
-}
+type Props = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
-export default function Home({ searchParams }: { searchParams: SearchParamProps['searchParams'] }) {
-  // Extract admin parameter and check its value
+export default function Home({ searchParams }: Props) {
   const isAdmin = searchParams?.admin === 'true';
 
   return (
@@ -20,11 +18,12 @@ export default function Home({ searchParams }: { searchParams: SearchParamProps[
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
           <Image
-            src="assets/icons/logo-full.svg"
+            src="/assets/icons/logo-full.svg"
             height={1000}
             width={1000}
             alt="patient"
             className="mb-12 h-10 w-fit"
+            priority
           />
 
           <PatientForm />
@@ -46,6 +45,7 @@ export default function Home({ searchParams }: { searchParams: SearchParamProps[
         width={1000}
         alt="patient"
         className="side-img max-w-[50%]"
+        priority
       />
     </div>
   );
