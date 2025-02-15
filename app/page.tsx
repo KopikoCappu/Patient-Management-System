@@ -9,8 +9,9 @@ interface SearchParamProps {
   };
 }
 
-export default function Home({ searchParams }: SearchParamProps) {
-  const isAdmin = searchParams.admin === 'true';
+export default function Home({ searchParams }: { searchParams: SearchParamProps['searchParams'] }) {
+  // Extract admin parameter and check its value
+  const isAdmin = searchParams?.admin === 'true';
 
   return (
     <div className="flex h-screen max-h-screen">
