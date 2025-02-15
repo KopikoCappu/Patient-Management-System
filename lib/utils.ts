@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const parseStringify = (value: any) => {
+export const parseStringify = (value: any) => { // @ts-ignore: any
   if (value === undefined || value === null) {
     return null; // Return null for undefined or null values
   }
@@ -15,7 +15,7 @@ export const parseStringify = (value: any) => {
 export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
 
 // FORMAT DATE TIME
-export const formatDateTime = (dateString: Date | string, timeZone: any) => {
+export const formatDateTime = (dateString: Date | string, timeZone: any)  => { // @ts-ignore: any
   const dateTimeOptions: Intl.DateTimeFormatOptions = {
     // weekday: "short", // abbreviated weekday name (e.g., 'Mon')
     month: "short", // abbreviated month name (e.g., 'Oct')

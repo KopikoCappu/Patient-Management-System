@@ -43,9 +43,9 @@ export const AppointmentForm = ({
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
-      primaryPhysician: appointment ? appointment.primaryPhysician: "",
+      primaryPhysician: appointment ? appointment.primaryPhysician : "",
       schedule: appointment ? new Date(appointment.schedule) : new Date(Date.now()),
-      reason: appointment ? appointment.reason: "",
+      reason: appointment ? appointment.reason : "",
       note: appointment ? appointment?.note : "",
       cancellationReason: appointment?.cancellationReason || "",
     },
@@ -73,7 +73,7 @@ export const AppointmentForm = ({
           primaryPhysician: values.primaryPhysician,
           schedule: new Date(values.schedule),
           reason: values.reason || "",
-          status:status as Status,
+          status: status as Status,
           note: values.note,
         });
 
@@ -108,9 +108,11 @@ export const AppointmentForm = ({
   };
 
   const buttonLabel =
-    type === "cancel" ? "Cancel Appointment" :
-    type === "schedule" ? "Schedule Appointment" :
-    "Create Appointment";
+    type === "cancel"
+      ? "Cancel Appointment"
+      : type === "schedule"
+      ? "Schedule Appointment"
+      : "Create Appointment";
 
   return (
     <Form {...form}>
@@ -192,7 +194,6 @@ export const AppointmentForm = ({
           isLoading={isLoading}
           className={`${type === "cancel" ? "shad-danger-btn" : "shad-primary-btn"} w-full`}
         >
-          
           {buttonLabel}
         </SubmitButton>
       </form>

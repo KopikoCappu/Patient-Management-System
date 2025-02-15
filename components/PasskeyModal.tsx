@@ -3,20 +3,17 @@
 import {
     AlertDialog,
     AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 
 
   import {
     InputOTP,
     InputOTPGroup,
-    InputOTPSeparator,
     InputOTPSlot,
   } from "@/components/ui/input-otp"
 import { decryptKey, encryptKey } from "@/lib/utils";
@@ -36,7 +33,6 @@ export const PasskeyModal = () => {
   const encryptedKey = typeof window !== "undefined" ? window.localStorage.getItem("accessKey") : null;
 
   useEffect(() => {
-    const accessKey = encryptedKey && decryptKey(encryptedKey);
 
     if (path && passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
       setOpen(false);  // Close the modal
