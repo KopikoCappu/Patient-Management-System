@@ -3,15 +3,12 @@ import PasskeyModal from "@/components/PasskeyModal";
 import Image from "next/image";
 import Link from "next/link";
 
-type Props = {
-  params: { slug: string }; // params should be an object
-  searchParams: { [key: string]: string | string[] | undefined }; // searchParams should be an object, NOT a Promise
-};
-
-
-
-export default function Home({ searchParams }: Props) {
-  const isAdmin = searchParams?.admin === 'true';
+export default async function Home(props: {
+  params: Promise<{ slug: string }>;
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const params = await props.params;
+  const isAdmin = props.searchParams?.admin === "true";
 
   return (
     <div className="flex h-screen max-h-screen">
