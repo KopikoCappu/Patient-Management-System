@@ -3,8 +3,9 @@ import PasskeyModal from "@/components/PasskeyModal";
 import Image from "next/image";
 import Link from "next/link";
 
-type SearchParams = { [key: string]: string | string[] | undefined };
-
+type SearchParamProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
 
 export default async function Home({ searchParams }: SearchParamProps) {
   const resolvedSearchParams = await searchParams;
