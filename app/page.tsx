@@ -3,55 +3,46 @@ import PasskeyModal from "@/components/PasskeyModal";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function Home({
-  params,
-  searchParams,
-}: {
-  params: { slug?: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  const isAdmin = searchParams?.admin === "true";
+export default async function Home({ searchParams} : SearchParamProps) {
+  const resolvedSearchParams = await searchParams;
+  const isAdmin = resolvedSearchParams.admin === 'true';
 
   return (
     <div className="flex h-screen max-h-screen">
-      {isAdmin && <PasskeyModal />}
 
-      <section className="remove-scrollbar container my-auto" aria-label="Patient registration">
+      {isAdmin && <PasskeyModal/>}
+
+
+      <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={40}
-            width={160}
-            alt="CarePulse Logo"
-            className="mb-12 w-fit"
-            priority
+          <Image 
+            src = "assets\icons\logo-full.svg"
+            height = {1000}
+            width = {1000}
+            alt = "patient"
+            className="mb-12 h-10 w-fit"
           />
 
-          <PatientForm />
+          <PatientForm/>
 
-          <footer className="mt-20 flex justify-between text-sm">
-            <p className="text-dark-600 xl:text-left">
-              © {new Date().getFullYear()} CarePulse
+          <div className="text-14-regular mt-20 flex justify-between">
+            <p className="justify-items-end text-dark-600 xl:text-left">
+            © 2024 CarePulse
             </p>
-            <Link 
-              href="/?admin=true" 
-              className="text-green-500"
-              aria-label="Access admin portal"
-            >
+            <Link href = "/?admin=true" className="text-green-500">
               Admin
             </Link>
-          </footer>
+          </div>
         </div>
       </section>
 
       <Image
-        src="/assets/images/onboarding-img.png"
-        height={800}
-        width={800}
-        alt="Patient onboarding illustration"
+        src = "/assets/images/onboarding-img.png"
+        height = {1000}
+        width = {1000}
+        alt = "patient"
         className="side-img max-w-[50%]"
-        priority
       />
     </div>
-  );
+  )
 }
