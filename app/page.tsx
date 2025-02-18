@@ -3,13 +3,18 @@ import PasskeyModal from "@/components/PasskeyModal";
 import Image from "next/image";
 import Link from "next/link";
 
-type SearchParamProps = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
+type SearchParams = {
+  admin?: string;
+  [key: string]: string | string[] | undefined;
+};
 
-export default async function Home({ searchParams }: SearchParamProps) {
-  const resolvedSearchParams = await searchParams;
-  const isAdmin = resolvedSearchParams.admin === 'true';
+type PageProps = {
+  searchParams: Promise<SearchParams>;
+};
+
+export default async function Home({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const isAdmin = params.admin === 'true';
 
   return (
     <div className="flex h-screen max-h-screen">
