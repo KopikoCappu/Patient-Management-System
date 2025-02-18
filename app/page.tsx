@@ -3,14 +3,13 @@ import PasskeyModal from "@/components/PasskeyModal";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Metadata } from "next";
-
-type Props = {
+export default async function Home({
+  params,
+  searchParams,
+}: {
   params: { slug?: string };
   searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export default async function Home({ params, searchParams }: Props) {
+}) {
   const isAdmin = searchParams?.admin === "true";
 
   return (
