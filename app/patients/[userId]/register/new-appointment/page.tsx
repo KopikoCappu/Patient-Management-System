@@ -2,14 +2,16 @@ import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
 import Image from "next/image";
 
-
 interface PageProps {
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export default async function NewAppointment({ params }: PageProps) {
-  const { userId } = params;
+  // First, await the params Promise to get the actual object
+  const resolvedParams = await params;
+  // Then extract userId from the resolved object
+  const { userId } = resolvedParams;
 
   const patient = await getPatient(userId);
   
