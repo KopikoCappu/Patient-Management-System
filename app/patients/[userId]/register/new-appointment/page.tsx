@@ -3,13 +3,13 @@ import { getPatient } from "@/lib/actions/patient.actions";
 import Image from "next/image";
 
 
-interface Params {
-  params: { userId: string }; // Params interface to expect userId as a string
+interface PageProps {
+  params: { userId: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function NewAppointment({ params }: Params) {
-  // Ensure params are awaited
-  const { userId } = await params; // This is where we await params
+export default async function NewAppointment({ params }: PageProps) {
+  const { userId } = params;
 
   const patient = await getPatient(userId);
   
